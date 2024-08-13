@@ -26,7 +26,9 @@ Future<void> main() async {
         result[entry.key] =
             (await translation.translate("en", lang, entry.value))
                 ?.translateContent;
+        printGreen("${entry.value} --> ${result[entry.key]}");
       }
+      printCyan("translated $lang.json successfully!");
       File("lib/src/file/result/$lang.json").writeAsString(jsonEncode(result));
     } catch (_) {}
   }

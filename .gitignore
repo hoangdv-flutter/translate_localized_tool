@@ -2,3 +2,4 @@ build
 *.lock
 .idea
 .dart_tool
+lib/src/file/result
