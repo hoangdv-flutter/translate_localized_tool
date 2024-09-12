@@ -6,18 +6,22 @@ import 'package:online_google_translator/expose.dart';
 final targetLang = ["es", 'pl', 'ro', 'tr'];
 
 Future<void> main() async {
+  final rootDir = "translate_for_flutter";
+
   final translation = TranslationDataSource.newInstance();
-  final contentSourceJson = await File("lib/src/file/en.json").readAsString();
+  final contentSourceJson =
+      await File("lib/${rootDir}/file/en.json").readAsString();
 
   final Map<String, dynamic> contentSource = jsonDecode(contentSourceJson);
 
-  final directory = Directory("lib/src/file/result");
+  final directory = Directory("lib/${rootDir}/file/result");
   if (!directory.existsSync()) directory.createSync(recursive: true);
 
   for (var lang in targetLang) {
     var resultJson = "{}";
     try {
-      resultJson = await File("lib/src/file/result/$lang.json").readAsString();
+      resultJson =
+          await File("lib/${rootDir}/file/result/$lang.json").readAsString();
     } catch (e) {}
     try {
       final Map<String, dynamic> result = jsonDecode(resultJson);
@@ -27,7 +31,8 @@ Future<void> main() async {
             (await translation.translate("en", lang, entry.value))
                 ?.translateContent;
       }
-      File("lib/src/file/result/$lang.json").writeAsString(jsonEncode(result));
+      File("lib/${rootDir}/file/result/$lang.json")
+          .writeAsString(jsonEncode(result));
     } catch (_) {}
   }
 }

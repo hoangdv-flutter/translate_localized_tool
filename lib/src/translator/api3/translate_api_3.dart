@@ -7,22 +7,24 @@ import 'package:online_google_translator/src/translator/translate_api.dart';
 class TranslateApi3 extends TranslateApi {
   @override
   Future<TranslateResult?> translate(String sl, String tl, String st) async {
-    final url = Uri.parse(
-        "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=rPsWke&source-path=%2F&f.sid=-1493147240274621710&bl=boq_translate-webserver_20240619.08_p0&soc-app=1&soc-platform=1&soc-device=1&_reqid=3932430&rt=c");
-    final response = await http.post(url, headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-    }, body: {
-      'f.req':
-          // ignore: unnecessary_string_escapes
-          '[[["MkEWBc","[[\\"$st\\",\\"$sl\\",\\"$tl\\",1],[]]",null,"generic"]]]',
-      'at':
-          'AFS6Qyi8NVjwCcmK4XASw2wwJsCl:${DateTime.now().millisecondsSinceEpoch}'
-    });
-    if (response.statusCode == 200) {
-      return _handleData(sl, tl, st, response.body);
-    }
+    try {
+      final url = Uri.parse(
+          "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=rPsWke&source-path=%2F&f.sid=-1493147240274621710&bl=boq_translate-webserver_20240619.08_p0&soc-app=1&soc-platform=1&soc-device=1&_reqid=3932430&rt=c");
+      final response = await http.post(url, headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+      }, body: {
+        'f.req':
+            // ignore: unnecessary_string_escapes
+            '[[["MkEWBc","[[\\"$st\\",\\"$sl\\",\\"$tl\\",1],[]]",null,"generic"]]]',
+        'at':
+            'AFS6Qyi8NVjwCcmK4XASw2wwJsCl:${DateTime.now().millisecondsSinceEpoch}'
+      });
+      if (response.statusCode == 200) {
+        return _handleData(sl, tl, st, response.body);
+      }
+    } catch (_) {}
     return null;
   }
 
