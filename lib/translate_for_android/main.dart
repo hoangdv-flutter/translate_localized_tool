@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:online_google_translator/expose.dart';
-import 'package:online_google_translator/print.dart';
 import 'package:xml/xml.dart';
 
 part 'translate_entry.dart';
