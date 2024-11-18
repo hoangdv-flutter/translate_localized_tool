@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:online_google_translator/expose.dart';
+import 'package:online_google_translator/src/util/map_converter.dart';
 import 'package:xml/xml.dart';
 
 part 'translate_entry.dart';
@@ -40,7 +41,7 @@ Future<void> main() async {
         for (final entry in outputMap.entries) {
           builder.element("string", nest: () {
             builder.attribute("name", entry.key);
-            builder.text(entry.value);
+            builder.text(StringFormat.decode(entry.value));
           });
         }
       });
@@ -66,7 +67,7 @@ Map<String, String> _parseStringFile(String path) {
     if (e.getAttribute("translatable") == "false") continue;
     final key = e.getAttribute("name");
     if (key == null) continue;
-    map[key] = e.innerText;
+    map[key] =StringFormat.encode(e.innerText);
   }
   return map;
 }
