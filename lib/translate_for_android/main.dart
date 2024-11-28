@@ -25,7 +25,8 @@ Future<void> main() async {
       for (final entry in inputMap.entries) {
         if (outputMap.containsKey(entry.key)) continue;
         final content = (await translation.translate("en", lang, entry.value))
-            ?.translateContent;
+            ?.translateContent
+            .replaceAll("'", "\\'");
         if (content == null) {
           printYellow("[\"$lang\"] Translate Failed: ${entry.key}");
           continue;
@@ -67,7 +68,7 @@ Map<String, String> _parseStringFile(String path) {
     if (e.getAttribute("translatable") == "false") continue;
     final key = e.getAttribute("name");
     if (key == null) continue;
-    map[key] =StringFormat.encode(e.innerText);
+    map[key] = StringFormat.encode(e.innerText);
   }
   return map;
 }
